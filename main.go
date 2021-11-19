@@ -83,10 +83,11 @@ func querySpotPlacementScores(targetCapacity int32, instanceTypes []string, regi
 
 // var GPUInstanceTypes = []string{"p2.xlarge", "p2.8xlarge", "p2.16xlarge", "p3.2xlarge", "p3.8xlarge", "p3.16xlarge", "p3dn.24xlarge", "p4d.24xlarge"}
 
-var GPUInstanceTypes = []string{"p2.xlarge", "p2.8xlarge", "p3.2xlarge", "p3.8xlarge"}
-var regionNames = []string{"us-east-1", "us-east-2", "us-west-1", "us-west-2"}
+// query corresponding with production pcluster
+var GPUInstanceTypes = []string{"p3.2xlarge", "g4dn.4xlarge", "c5.4xlarge"}
+var regionNames = []string{"us-east-1"}
 var singleAvailabilityZoneRange = []bool{true, false}
-var targetCapacityRange = []int32{1, 2, 4}
+var targetCapacityRange = []int32{1}
 
 func saveResult() {
 	filename := now + ".csv"
@@ -112,29 +113,7 @@ func saveResult() {
 }
 
 func main() {
-	spotPlacementScoresCases = []spotPlacementScoresCase{
-		{
-			instanceTypes:          GPUInstanceTypes,
-			regionNames:            regionNames,
-			targetCapacity:         int32(1),
-			singleAvailabilityZone: true,
-			name:                   "all_1_true",
-		},
-		{
-			instanceTypes:          GPUInstanceTypes,
-			regionNames:            regionNames,
-			targetCapacity:         int32(2),
-			singleAvailabilityZone: true,
-			name:                   "all_2_true",
-		},
-		{
-			instanceTypes:          GPUInstanceTypes,
-			regionNames:            regionNames,
-			targetCapacity:         int32(4),
-			singleAvailabilityZone: true,
-			name:                   "all_4_true",
-		},
-	}
+	spotPlacementScoresCases = []spotPlacementScoresCase{}
 
 	for _, instance := range GPUInstanceTypes {
 		for _, single := range singleAvailabilityZoneRange {
